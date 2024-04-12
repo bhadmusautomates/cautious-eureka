@@ -28,15 +28,19 @@ When(/^I insert the business email$/, () => {
 });
 
 When(/^I insert a unique phone number$/, () => {
-	return true;
+	cy.insertNumber()
 });
 
 When(/^I click Next Button$/, () => {
 	return true;
 });
 
-When(/^I select Instagram as how I heard about mima$/, () => {
-	return true;
+Given(/^when I click "([^"]*)" field$/, (element) => {
+	cy.clickGivenElement(element)
+});
+
+When(/^I click "([^"]*)" as how I heard about mima$/, (element) => {
+	cy.clickGivenElement(element)
 });
 
 When(/^I fill in the password$/, () => {
@@ -52,7 +56,7 @@ Then(/^I should see the OTP page$/, () => {
 });
 
 When(/^I insert the OTP$/, () => {
-	return true;
+	cy.insertOTP()
 });
 
 Then(/^I should see the dashboard$/, () => {
@@ -69,13 +73,6 @@ When(/^I fill in the "([^"]*)" with data "([^"]*)"$/, (args1,args2) => {
 	cy.fillDetails(args1,args2);
 	
 });
-
-
-
-
-
-
-
 
 
 // const { faker } = require("@faker-js/faker")

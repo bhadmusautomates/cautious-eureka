@@ -20,7 +20,7 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
     watchForFileChanges: false,
     experimentalRunAllSpecs: true,
-    specPattern:'**/*.feature',
-    setupNodeEvents,
-  },
+    specPattern: '**/*.feature',
+    setupNodeEvents
+  }
 });
