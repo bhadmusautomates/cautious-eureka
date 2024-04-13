@@ -30,7 +30,7 @@ Feature: SignUp Journey and Scenario
         Given I click "Sign up" Button
         When I fill in the "fullname" with data "Mercy Aigbe"
         And I fill in the "businessname" with data "Mercy"
-        And I insert the business email
+        And I insert the "business email"
         And I insert a unique phone number
         And I fill in the "businessRegNum" with data "RC-7878"
         And I click "Next" Button
