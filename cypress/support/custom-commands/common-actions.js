@@ -3,6 +3,8 @@ let details
 let data
 let inboxId
 let emailAddress
+let iden
+const { faker } = require("@faker-js/faker")
 
 before(() => {
     cy.fixture('creds').then(cred => {
@@ -10,7 +12,9 @@ before(() => {
     })
     cy.fixture('selectors').then(sel=>{
         data = sel
+        iden = data.otpPage
     })
+    
 })
 
 Cypress.Commands.add('clickSpecifiedElement', (element) => { 
@@ -73,6 +77,9 @@ Cypress.Commands.add('insertDetails', (string) => {
             break
         case 'business reg number':
             cy.typeAText(data.basicDetailsPage.bizRegNum, 'RC-777')
+            break
+        case 'phone number':
+            cy.typeAText(data.basicDetailsPage.bizPhoneNum, faker.phone.number('+23480########'))
     }
 })
 
@@ -86,4 +93,9 @@ Cypress.Commands.add('Login', ()=>{
     cy.typeAText(data.otherDetailsPage.passwordField,details.password)
     cy.clickSpecifiedElement('Login')
     cy.contains('Select a Plan').should('be.visible')
+})
+
+Cypress.Commands.add('ValidateItem', (field) =>
+{
+    cy.contains(field).should('be.visible')
 })

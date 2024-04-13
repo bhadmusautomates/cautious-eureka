@@ -23,7 +23,7 @@ Given(/^I click "([^"]*)" Button$/, (element) => {
 	cy.clickSpecifiedElement(element)
 });
 
-When(/^I insert the business email$/, () => {
+When(/^I insert the "([^"]*)"$/, (args1) => {
 	cy.insertEmail()
 });
 
@@ -58,6 +58,12 @@ When(/^I fill in the "([^"]*)"$/, (args1) => {
 When(/^I fill in the "([^"]*)" with data "([^"]*)"$/, (args1,args2) => {
 	cy.fillDetails(args1,args2);
 	
+});
+
+
+When(/^I click "([^"]*)"$/, (args1) => {
+  cy.get(other.heardAboutUs).click();
+  cy.get(other.InsOption).click()
 });
 
 
