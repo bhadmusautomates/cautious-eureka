@@ -1,3 +1,4 @@
+import {faker } from '@faker-js/faker'
 let details
 let data
 let inboxId
@@ -16,6 +17,10 @@ Cypress.Commands.add('clickSpecifiedElement', (element) => {
     cy.contains(element).should('be.visible').and('exist').click()
 })
 
+Cypress.Commands.add('uniquePhoneNumber', () => { 
+    cy.get(data.basicDetailsPage.bizPhoneNum).should('exist').fill(faker.phone.number('+23481#######'))
+})
+
 Cypress.Commands.add('insertEmail', () => {     
     cy.mailslurp().then(mailslurp => mailslurp.createInbox().then(inbox => {
     inboxId = inbox.id
@@ -32,8 +37,30 @@ Cypress.Commands.add('insertEmail', () => {
   }))
 })
 
+Cypress.Commands.add('insertOTP', () => {     
+    cy.mailslurp().then(mailslurp => mailslurp.waitForLatestEmail(inboxId, 30000, true).then(email => {
+        const emailBody = email.body
+        const parser = new DOMParser()
+        const doc = parser.parseFromString(emailBody, "text/html")
+        const code = doc.querySelector('tr:nth-of-type(2) > td > table td > p:nth-of-type(3)').textContent
+        const otp = code.trim()
+        cy.get(data.otpPage.inputBox).each(($el, index) => {
+          cy.wrap($el).should('be.visible').type(otp[index])
+        })
+      }))
+})
+
 Cypress.Commands.add('typeAText', (field, text) => { 
     cy.get(field).should('be.visible').and('exist').fill(text)
+})
+
+Cypress.Commands.add('verifyOtpPage', () => { 
+    cy.get(data.otpPage.otpVerification).should('be.visible').and('have.text', 'Please enter the code below')
+})
+
+Cypress.Commands.add('heardAboutUs', (element) => { 
+    cy.get(data.otherDetailsPage.heardAboutUs).should('be.visible').and('exist').click()
+    cy.get(data.otherDetailsPage.aboutUsList).contains(element).should('exist').click()
 })
 
 Cypress.Commands.add('insertDetails', (string) => { 
