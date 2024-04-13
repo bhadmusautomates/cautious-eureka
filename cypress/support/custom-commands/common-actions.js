@@ -4,7 +4,7 @@ let data
 let inboxId
 let emailAddress
 let iden
-const { faker } = require("@faker-js/faker")
+
 
 before(() => {
     cy.fixture('creds').then(cred => {
