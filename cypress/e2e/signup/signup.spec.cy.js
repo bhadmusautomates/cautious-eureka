@@ -28,35 +28,25 @@ When(/^I insert the business email$/, () => {
 });
 
 When(/^I insert a unique phone number$/, () => {
-	return true;
+	cy.uniquePhoneNumber()
 });
 
-When(/^I click Next Button$/, () => {
-	return true;
-});
-
-When(/^I select Instagram as how I heard about mima$/, () => {
-	return true;
-});
-
-When(/^I fill in the password$/, () => {
-	return true;
-});
-
-When(/^I click Signup Button$/, () => {
-	return true;
+When(/^I select "([^"]*)" as how I heard about mima$/, (text) => {
+	cy.heardAboutUs(text)
 });
 
 Then(/^I should see the OTP page$/, () => {
-	return true;
+	cy.verifyOtpPage()
 });
 
 When(/^I insert the OTP$/, () => {
-	return true;
+	cy.insertOTP()
 });
 
-Then(/^I should see the dashboard$/, () => {
-	return true;
+Then(/^I should see the following on the dashboard$/, (datatable) => {
+	datatable.hashes().forEach((row)=>{
+    cy.contains(row.sidebar).should('exist').and('contain', row.sidebar)
+  })
 });
 
 
@@ -126,16 +116,16 @@ When(/^I fill in the "([^"]*)" with data "([^"]*)"$/, (args1,args2) => {
 //     cy.contains('Google Search').should('be.visible').click()
 //     cy.get(other.passwordField).fill('Test1234@')
 //     cy.contains('Sign Up').click()
-//     cy.mailslurp().then(mailslurp => mailslurp.waitForLatestEmail(inboxId, 30000, true).then(email => {
-//       const emailBody = email.body
-//       const parser = new DOMParser()
-//       const doc = parser.parseFromString(emailBody, "text/html")
-//       const code = doc.querySelector('tr:nth-of-type(2) > td > table td > p:nth-of-type(3)').textContent
-//       const otp = code.trim()
-//       cy.get(iden.inputBox).each(($el, index) => {
-//         cy.wrap($el).should('be.visible').type(otp[index])
-//       })
-//     }))
+    // cy.mailslurp().then(mailslurp => mailslurp.waitForLatestEmail(inboxId, 30000, true).then(email => {
+    //   const emailBody = email.body
+    //   const parser = new DOMParser()
+    //   const doc = parser.parseFromString(emailBody, "text/html")
+    //   const code = doc.querySelector('tr:nth-of-type(2) > td > table td > p:nth-of-type(3)').textContent
+    //   const otp = code.trim()
+    //   cy.get(iden.inputBox).each(($el, index) => {
+    //     cy.wrap($el).should('be.visible').type(otp[index])
+    //   })
+    // }))
 //   cy.contains('Select a Plan').should('be.visible')
 //   })
 // })
